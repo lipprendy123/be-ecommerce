@@ -4,6 +4,7 @@ const connectDb = require('./config/db')
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const authRoute = require('./routes/authRoute');
+const eventRoute = require('./routes/eventRoute');
 
 const app = express();
 
@@ -16,6 +17,7 @@ connectDb()
 
 // route
 app.use('/api/auth', authRoute)
+app.use('/api', eventRoute)
 
 app.listen(port, () => {
     console.log(`Server run on port ${port}`);
