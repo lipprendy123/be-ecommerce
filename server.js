@@ -6,6 +6,7 @@ const cors = require('cors');
 const authRoute = require('./routes/authRoute');
 const eventRoute = require('./routes/eventRoute');
 const categoryRoute = require('./routes/categoryRoute');
+const ticketRoute = require('./routes/ticketRoute');
 
 const app = express();
 
@@ -20,6 +21,7 @@ connectDb()
 app.use('/api/auth', authRoute)
 app.use('/api', eventRoute)
 app.use('/api', categoryRoute)
+app.use('/api', ticketRoute)
 
 app.listen(port, () => {
     console.log(`Server run on port ${port}`);

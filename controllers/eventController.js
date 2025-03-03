@@ -3,9 +3,9 @@ const Event = require('../models/eventModel')
 const eventController = {
     async createEvent(req, res) {
         try {
-            const { title, description, date, location, tickets, attendees, status } = req.body;
+            const { title, description, date, location, tickets, attendees, category, status } = req.body;
     
-            if (!title || !description || !date || !location) {
+            if (!title || !description || !date || !location || !tickets) {
                 return res.status(400).json({
                     success: false,
                     message: "Missing details"
@@ -21,6 +21,10 @@ const eventController = {
     
             const filePaths = req.files.map(file => file.filename);
     
+            const ticketArray = tickets ? tickets.split(",").map(id => id.trim()) : []
+
+            const categoryArray = category ? category.split(",").map(id => id.trim()) : []
+
             const eventDate = new Date(date);
             if (eventDate < new Date()) {
                 return res.status(400).json({
@@ -35,6 +39,8 @@ const eventController = {
                 date: eventDate,
                 location,
                 image: filePaths,
+                tickets: ticketArray,
+                category: categoryArray
             };
     
             const event = await Event.create(data);
